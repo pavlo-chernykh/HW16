@@ -10,27 +10,28 @@
   <script>
     function getFibo() {
     const cache = new Map();
-      return function* fibonacci(n, current = 0, next = 1) {
-        let resultArr = [];
-        if (n === 0) {
-          return current;
+    let count = 0;
+    let current = 0;
+    let next = 1
+      return function* (itt) {
+        while (count <=itt) {
+          cache.set(count, current);
+          // console.log('cache while', cache.values());
+          [current, next] = [next, current + next];
+          count++;
         }
-        if (cache.has(n) === true) {
-          yield cache.get(n)
-        }
-        resultArr.push(current)
-        yield cache.set(n, resultArr);
-        // console.log(cache);
-        return yield* fibonacci(n-1, next, current + next);
+
+        yield cache.get(itt);
+        console.log('cache', cache.values());
+        
       }
     }
-
     const cacheGen = getFibo();
-    for (const value of cacheGen(3)) {
-      console.log('3', value);
+    for (const value of cacheGen(10)) {
+      console.log('10el', value);
     }
     for (const value of cacheGen(5)) {
-      console.log('5', value);
+      console.log('5el', value);
     }
   </script>
 </body>
