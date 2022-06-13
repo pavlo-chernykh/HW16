@@ -14,6 +14,9 @@
         if (n === 0) {
           return current;
         }
+        if (cache.has('fibo') === true) {
+          yield cache.get('fibo')
+        }
         yield cache.set('fibo', current);
         return yield* fibonacci(n-1, next, current + next);
       }
