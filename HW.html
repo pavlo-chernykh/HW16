@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function getFibo() {
+    const cache = new Map();
+      return function* fibonacci(n, current = 0, next = 1) {
+        if (n === 0) {
+          return current;
+        }
+        yield cache.set('fibo', current);
+        return yield* fibonacci(n-1, next, current + next);
+      }
+    }
+
+    const cacheGen = getFibo();
+    for (const value of cacheGen(10)) {
+      console.log('10', value);
+    }
+    for (const value of cacheGen(5)) {
+      console.log('5', value);
+    }
+  </script>
+</body>
+</html>
